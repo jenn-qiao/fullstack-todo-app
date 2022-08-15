@@ -1,10 +1,9 @@
 import faker from "faker";
 
-
 export interface DbList {
-  toDo: string
-  creationDate: string
-  dueBy: string
+  toDo: string;
+  creationDate: string;
+  dueBy: string;
 }
 
 export interface DbListWithId extends DbList {
@@ -16,8 +15,10 @@ const db: DbListWithId[] = [];
 /** Variable to keep incrementing id of database items */
 let idCounter = 0;
 
-let today = new Date().toLocaleDateString()
-let randomDate=`${Math.floor(Math.random() * 13) + 1}/${Math.floor(Math.random() * 32) + 1}/${Math.floor(Math.random() * 20) + 2022}`
+let today = new Date().toLocaleDateString();
+let randomDate = `${Math.floor(Math.random() * 13) + 1}/${
+  Math.floor(Math.random() * 32) + 1
+}/${Math.floor(Math.random() * 20) + 2022}`;
 
 /**
  * Adds in some dummy database items to the database
@@ -31,7 +32,7 @@ export const addDummyDbListIDs = (n: number): DbListWithId[] => {
     const createdSignature = addDbList({
       toDo: faker.lorem.sentences(3), // random fake message
       creationDate: today,
-      dueBy: randomDate
+      dueBy: randomDate,
     });
     createdSignatures.push(createdSignature);
   }
