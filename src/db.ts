@@ -1,15 +1,23 @@
-export interface DbItem {
-  // sketch out interface here
+import faker from "faker";
+
+
+export interface DbList {
+  toDo: string
+  creationDate: string
+  dueBy: string
 }
 
-export interface DbItemWithId extends DbItem {
+export interface DbListWithId extends DbList {
   id: number;
 }
 
-const db: DbItemWithId[] = [];
+const db: DbListWithId[] = [];
 
 /** Variable to keep incrementing id of database items */
 let idCounter = 0;
+
+let today = new Date().toLocaleDateString()
+let randomDate=`${Math.floor(Math.random() * 13) + 1}/${Math.floor(Math.random() * 32) + 1}/${Math.floor(Math.random() * 20) + 2022}`
 
 /**
  * Adds in some dummy database items to the database
@@ -17,11 +25,13 @@ let idCounter = 0;
  * @param n - the number of items to generate
  * @returns the created items
  */
-export const addDummyDbItems = (n: number): DbItemWithId[] => {
-  const createdSignatures: DbItemWithId[] = [];
+export const addDummyDbListIDs = (n: number): DbListWithId[] => {
+  const createdSignatures: DbListWithId[] = [];
   for (let count = 0; count < n; count++) {
-    const createdSignature = addDbItem({
-      // possibly add some generated data here
+    const createdSignature = addDbList({
+      toDo: faker.lorem.sentences(3), // random fake message
+      creationDate: today,
+      dueBy: randomDate
     });
     createdSignatures.push(createdSignature);
   }
@@ -34,8 +44,8 @@ export const addDummyDbItems = (n: number): DbItemWithId[] => {
  * @param data - the item data to insert in
  * @returns the item added (with a newly created id)
  */
-export const addDbItem = (data: DbItem): DbItemWithId => {
-  const newEntry: DbItemWithId = {
+export const addDbList = (data: DbList): DbListWithId => {
+  const newEntry: DbListWithId = {
     id: ++idCounter,
     ...data,
   };
@@ -50,12 +60,12 @@ export const addDbItem = (data: DbItem): DbItemWithId => {
  * @returns the deleted database item (if originally located),
  *  otherwise the string `"not found"`
  */
-export const deleteDbItemById = (id: number): DbItemWithId | "not found" => {
-  const idxToDeleteAt = findIndexOfDbItemById(id);
+export const deleteDbListById = (id: number): DbListWithId | "not found" => {
+  const idxToDeleteAt = findIndexOfDbListById(id);
   if (typeof idxToDeleteAt === "number") {
-    const itemToDelete = getDbItemById(id);
+    const listToDelete = getDbListById(id);
     db.splice(idxToDeleteAt, 1); // .splice can delete from an array
-    return itemToDelete;
+    return listToDelete;
   } else {
     return "not found";
   }
@@ -68,7 +78,7 @@ export const deleteDbItemById = (id: number): DbItemWithId | "not found" => {
  * @returns the index of the matching database item,
  *  otherwise the string `"not found"`
  */
-const findIndexOfDbItemById = (id: number): number | "not found" => {
+const findIndexOfDbListById = (id: number): number | "not found" => {
   const matchingIdx = db.findIndex((entry) => entry.id === id);
   // .findIndex returns -1 if not located
   if (matchingIdx !== -1) {
@@ -82,7 +92,7 @@ const findIndexOfDbItemById = (id: number): number | "not found" => {
  * Find all database items
  * @returns all database items from the database
  */
-export const getAllDbItems = (): DbItemWithId[] => {
+export const getAllDbListIDs = (): DbListWithId[] => {
   return db;
 };
 
@@ -93,7 +103,7 @@ export const getAllDbItems = (): DbItemWithId[] => {
  * @returns the located database item (if found),
  *  otherwise the string `"not found"`
  */
-export const getDbItemById = (id: number): DbItemWithId | "not found" => {
+export const getDbListById = (id: number): DbListWithId | "not found" => {
   const maybeEntry = db.find((entry) => entry.id === id);
   if (maybeEntry) {
     return maybeEntry;
@@ -111,11 +121,11 @@ export const getDbItemById = (id: number): DbItemWithId | "not found" => {
  * @returns the updated database item (if one is located),
  *  otherwise the string `"not found"`
  */
-export const updateDbItemById = (
+export const updateDbListById = (
   id: number,
-  newData: Partial<DbItem>
-): DbItemWithId | "not found" => {
-  const idxOfEntry = findIndexOfDbItemById(id);
+  newData: Partial<DbList>
+): DbListWithId | "not found" => {
+  const idxOfEntry = findIndexOfDbListById(id);
   // type guard against "not found"
   if (typeof idxOfEntry === "number") {
     return Object.assign(db[idxOfEntry], newData);

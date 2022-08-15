@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>My server API</title>
+    <title>My to-do list</title>
   </head>
   <body>
     <header>
-      <h1>My server API</h1>
-      <h2>RESTful JSON API</h2>
+      <h1>My to-do list</h1>
     </header>
     <main>
       <section>
-        <h3>Retrieve all items</h3>
-        <p><code>GET /items</code></p>
+        <h3>Retrieve full to-do list</h3>
+        <p><code>GET /list</code></p>
       </section>
       <section>
-        <h3>Create a item</h3>
-        <p><code>POST /items</code></p>
+        <h3>Create a to-do</h3>
+        <p><code>POST /list</code></p>
       </section>
       <section>
-        <h3>Retrieve a specific item</h3>
-        <p><code>GET /items/{id}</code></p>
+        <h3>Retrieve a specific to-do</h3>
+        <p><code>GET /list/{id}</code></p>
       </section>
       <section>
-        <h3>Update a specific item</h3>
-        <p><code>PATCH /items/{id}</code></p>
+        <h3>Update a specific to-do</h3>
+        <p><code>PATCH /list/{id}</code></p>
         <p>Attaching a JSON body with the possible below fields:</p>
         <ul>
-          <li><code>title</code> (string)</li>
+          <li><code>to-do</code> (string)</li>
           <li><code>message</code> (string)</li>
         </ul>
       </section>
       <section>
-        <h3>Delete a specific item</h3>
-        <p><code>DELETE /items/{id}</code></p>
+        <h3>Delete a specific to-do</h3>
+        <p><code>DELETE /list/{id}</code></p>
       </section>
     </main>
   </body>
